@@ -50,5 +50,8 @@ penguinData <- penguinData %>% mutate(name = case_when(name == 'Pygoscelis antar
                                                        name == 'Pygoscelis papua (J.R.Forster, 1781)' ~ 'gentoo',
                                                        TRUE ~ 'adelie'))
 
+# count number of species
+penguinData %>% count(name)
+
 # view data
 View(penguinData)

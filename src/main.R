@@ -15,7 +15,7 @@ max.lon <- ceiling(max(penguinData$longitude))
 min.lon <- floor(min(penguinData$longitude))
 
 # save as jpg
-jpeg(file="penguins.jpg")
+jpeg(file="output/penguins.jpg")
 
 # load spatial polygons
 data(wrld_simpl)
