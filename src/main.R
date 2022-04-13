@@ -30,14 +30,23 @@ plot(wrld_simpl,
      sub="Penguins" # caption
 )
 
+penguinData$name <- factor(penguinData$name)
+
 # add the points for individual observation
 points(x = penguinData$longitude, 
        y = penguinData$latitude, 
-       col = "blue", 
+       col = c("#ff8400", "#be43cc", "#04838a"), 
        pch = 20, 
-       cex = 0.75)
+       cex = 0.75,
+       lwd = 0.5)
+
+legend(x="bottomright", 
+        legend=c("Gentoo", "Chinstrap", "Adelie"), 
+        col=c("#04838a","#be43cc","#ff8400"), 
+        pch=20, merge=FALSE )
 
 # draw a little box around the graph
 box()
 # stop mapping
 dev.off()
+# 
