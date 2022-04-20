@@ -50,6 +50,13 @@ penguinData <- penguinData %>% mutate(name = case_when(name == 'Pygoscelis antar
                                                        name == 'Pygoscelis papua (J.R.Forster, 1781)' ~ 'gentoo',
                                                        TRUE ~ 'adelie'))
 
+saveSpace <- penguinData # save penguin data to not requery every time
+
+penguinData <- saveSpace
+
+penguinData <- penguinData %>% filter(longitude < 0, longitude > -100) # limit longitude?
+penguinData <- penguinData %>% filter(latitude > -80, latitude < -50) # limit latitude?
+
 # count number of species
 penguinData %>% count(name)
 
