@@ -50,3 +50,7 @@ box()
 # stop mapping
 dev.off()
 # 
+
+
+source("src/setup.R")
+source("src/penguins-sdm-single.R")

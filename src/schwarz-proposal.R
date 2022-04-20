@@ -62,3 +62,6 @@ penguinData %>% count(name)
 
 # view data
 View(penguinData)
+
+penguinData <- apply(penguinData, 2, as.character)
+write.csv(penguinData, "data/penguins.csv")
