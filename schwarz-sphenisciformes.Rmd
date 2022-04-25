@@ -1,0 +1,40 @@
+---
+title: "Schwarz Sphenisciformes"
+author: "Adam Schwarz"
+date: '2022-05-04'
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+
+
+## Species
+
+
+
+## Data Source
+
+[GBIF](gbif.org)
+
+## Data Cleaning
+
+
+
+## Species Occurence Map
+
+
+
+## Species Distribution Model
+
+
+
+## Species Forecast Model
+
+
+
+## Summary of Findings
