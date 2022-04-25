@@ -19,7 +19,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Data Source
 
-[GBIF](gbif.org)
+[GBIF](gbif.org), the Global Biodiversity Information Facility is a website that contains 
 
 ## Data Cleaning
 
@@ -27,7 +27,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Species Occurence Map
 
-
+![Occurence Map](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/penguinsZoomed.jpg)
 
 ## Species Distribution Model
 
@@ -38,3 +38,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ## Summary of Findings
+
+
+## References
+[GBIF](gbif.org)
