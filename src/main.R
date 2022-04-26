@@ -6,6 +6,13 @@ library("spocc")
 library("maptools") 
 library("tidyverse")
 
+# TODO
+# make setup.R load all required packages
+# add source("src/functions.R") and source("src/setup.R") to main.R
+# setup main.R to use functions.R
+# add occurence map to functions.R
+
+
 # max and min latitude
 max.lat <- ceiling(max(penguinData$latitude))
 min.lat <- floor(min(penguinData$latitude))

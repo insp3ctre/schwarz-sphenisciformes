@@ -46,9 +46,9 @@ adelieData <- cleanData(adelieData)
 penguinData <- bind_rows(chinstrapData, gentooData, adelieData)
 
 # rename name
-penguinData <- penguinData %>% mutate(name = case_when(name == 'Pygoscelis antarcticus (J.R.Forster, 1781)' ~ 'chinstrap',
-                                                       name == 'Pygoscelis papua (J.R.Forster, 1781)' ~ 'gentoo',
-                                                       TRUE ~ 'adelie'))
+penguinData <- penguinData %>% mutate(name = case_when(name == 'Pygoscelis antarcticus (J.R.Forster, 1781)' ~ 'Chinstrap',
+                                                       name == 'Pygoscelis papua (J.R.Forster, 1781)' ~ 'Gentoo',
+                                                       TRUE ~ 'Adelie'))
 
 saveSpace <- penguinData # save penguin data to not requery every time
 

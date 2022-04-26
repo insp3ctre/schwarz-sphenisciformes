@@ -7,38 +7,69 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+install.packages("knitr")
+install.packages("tidyverse")
+install.packages("spocc")
+library(knitr)
+library(tidyverse)
+library(spocc)
+source("src/functions.R")
+penguinsData <- query()
 ```
 
 ## Background
 
+## Why Penguins?
 
+Firstly, ![PENGUINS](https://afar-production.imgix.net/uploads/images/afar_post_headers/images/cTfuWAUJoH/original_penguin-arctic-antarctica-2.jpg)
+
+Secondly, penguins are indicator species in Antarctica. An indicator species is a species that helps scientists understand the health of an ecosystem. By monitoring the health and size of a specific population in a specific area, scientists can better understand how the overall environment is doing. Penguins typically feed on krill, and krill is only found where sea ice is present. If scientists notice that there is a drop in penguin population, they can hypothesize that this is due to a decrease in krill population, which is a primary food source for many Antarctic species. From this one observation from this one species, it is possible to make bigger inferences and devote research efforts to this issue.^2^
+
+## Research Question
+
+How are these penguins doing? Is there a concern for their habitat and ecosystem?
 
 ## Species
 
+## Data Sources
 
+### [GBIF](gbif.org)
 
-## Data Source
+The Global Biodiversity Information Facility is a website that contains open access data "about all types of life on Earth."^1^ In particular, you can search for specific species of animals and view thousands of entries of occurence data. Using the **Spocc** package in R, data can be queried directly from GBIF and placed into a variable. If desired, the specifc years and amount of data that is pulled can be included as query parameters. For the sake of simplicity and to save computing power, the default limit of 500 occurence entries was used for each species. No other query parameters were used.
 
-[GBIF](gbif.org), the Global Biodiversity Information Facility is a website that contains 
+### [WorldClim](https://www.worldclim.org/data/bioclim.html)
+
+WorldClim was the provider of any climate data used in this project. It consists of 19 bioclimatic variables that range from max temperatures in a particular month to precipitation levels during a typically dry month. This was used to model both current and future distribution. The amount of data is very large and can cause issues within RStudio Cloud, so proceed with caution.
 
 ## Data Cleaning
 
+The data queried from GBIF was cleaned to ensure that the data was usable. This included making sure that the entries had a count of at least 1 occurrence, the status of the occurrence "Present" as opposed to "Absent", and making sure both longitude and latitude were present. After this process, the following data counts were left:
 
+```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
+tab <- penguinsData %>% count(name)
+tab <- rename(tab, Species = name)
+tab <- rename(tab, Occurence_Entries = n)
+kable(tab)
+
+```
 
 ## Species Occurence Map
 
 ![Occurence Map](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/penguinsZoomed.jpg)
 
+Based on the limited queried data, the three penguin species appear to intermingle with each other. There are no major clusters of a particular species. For the most part, they can be found along the coastline of particular areas, likely due to their need to feed on other aquatic species.
+
 ## Species Distribution Model
-
-
 
 ## Species Forecast Model
 
-
-
 ## Summary of Findings
 
+### Acknowledgement
+
+I would like to acknowledge Jeff Oliver, a Data Science Specialist at University of Arizona, from whom I have [borrowed code](https://github.com/jcoliver/biodiversity-sdm-lesson).
 
 ## References
-[GBIF](gbif.org)
+
+1.  [GBIF](gbif.org)
+2.  [envirobites](https://envirobites.org/2021/02/09/penguins-and-conservation-how-penguins-can-help-us-conserve-an-entire-ecosystem/)
