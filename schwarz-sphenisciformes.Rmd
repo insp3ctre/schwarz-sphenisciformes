@@ -1,7 +1,7 @@
 ---
 title: "Schwarz Sphenisciformes"
 author: "Adam Schwarz"
-date: '2022-05-04'
+date: '05-04-2022'
 output: html_document
 ---
 
@@ -122,6 +122,7 @@ kable(tab)
 ```
 
 ## Total Occurrences
+
 ```{r graph1, echo=FALSE}
 # make ymd into one variable
 penguinData <- penguinData %>% mutate(date = make_date(year=year, month=month, day=day))
@@ -133,6 +134,7 @@ penguinData %>%
   labs(title = "Occurrences Over Time", caption = "1,746,665 total occurrences of Adelie, Chinstrap, and Gentoo penguins", x="Date", y="Total Occurrences") +
   theme(plot.title = element_text(hjust = 0.5), plot.caption = element_text(hjust=0.5))
 ```
+
 *Note: This data consists of both accurate and estimated counts, and does not contain all available data (due to computing limitations). *
 
 At the beginning of this particular data set, there was a sharp rise in population. However, it very quickly plateaued for several years. This could be for several reasons, one of which may simply be a lack of observed data during this time. Because the data was only queried in a small amount, there may be a lack of information during this time period that was not queried. Alternatively, there may not have been many researchers during this time, potentially caused by the ongoing pandemic.
@@ -149,7 +151,7 @@ Based on the limited queried data, the three penguin species appear to interming
 
 A species distribution model displays the current habitats that are suitable for a particular species. The species may not currently be in those areas, but they would be suitable should the species choose to move. This model also consists of the current occurrence data. At first glance, it may not be noticeable that there are any suitable habitats, but the bottom tip of South America has a small patch of habitable land for penguins. After this map was generated, it was immediately obvious that there is a major flaw with this project: lack of data.
 
-The species distribution model relies on climate data to determine suitable habitats. If there is not sufficient climate data, then the model will not be complete. The reasoning for the low amount of suitable areas is likely due to the lack of accessible climate data recorded in this portion of Antarctica. WorldClim was chosen due to the ease of integrating with R, but it appears that there is not sufficient WorldClim data available in this region to fully determine all currently suitable habitats for penguins. It can be inferred that the current occurrences of penguins are in decent habitats.
+The species distribution model relies on climate data to determine suitable habitats. If there is not sufficient climate data, then the model will not be complete. The reasoning for the low amount of suitable areas is likely due to the lack of accessible climate data recorded in this portion of Antarctica. WorldClim was chosen due to the ease of integrating with R, but it appears that there is not sufficient WorldClim data available in this region to fully determine all currently suitable habitats for penguins. It can be inferred that the current occurrences of penguins are in potentially decent habitats.
 
 
 ## Species Forecast Model
