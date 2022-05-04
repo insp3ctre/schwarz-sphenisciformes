@@ -53,9 +53,9 @@ kable(tab)
 
 ```
 
-## Species Occurence Map
+## Species Occurrence Map
 
-![Occurence Map](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/penguinsZoomed.jpg)
+![Occurrence Map](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/penguinsZoomed.jpg)
 
 Based on the limited queried data, the three penguin species appear to intermingle with each other. There are no major clusters of a particular species. For the most part, they can be found along the coastline of particular areas, likely due to their need to feed on other aquatic species.
 

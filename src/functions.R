@@ -37,8 +37,57 @@ query <- function() {
                                                          name == 'Pygoscelis papua (J.R.Forster, 1781)' ~ 'Gentoo',
                                                          TRUE ~ 'Adelie'))
   
-  penguinData <- penguinData %>% filter(longitude < 0, longitude > -100) # limit longitude?
-  penguinData <- penguinData %>% filter(latitude > -80, latitude < -50) # limit latitude?
+  penguinData <- penguinData %>% filter(longitude < 0, longitude > -100) # limit longitude
+  penguinData <- penguinData %>% filter(latitude > -80, latitude < -50) # limit latitude
   
   return(penguinData)
+}
+
+occurrenceMap <- function() {
+  # max and min latitude
+  max.lat <- ceiling(max(penguinData$latitude))
+  min.lat <- floor(min(penguinData$latitude))
+  
+  # max and min longitude
+  max.lon <- ceiling(max(penguinData$longitude))
+  min.lon <- floor(min(penguinData$longitude))
+  
+  # save as jpg
+  jpeg(file="output/penguinsZoomed.jpg")
+  
+  # load spatial polygons
+  data(wrld_simpl)
+  
+  # plot base map
+  plot(wrld_simpl, 
+       xlim = c(min.lon, max.lon), # sets upper/lower x
+       ylim = c(min.lat, max.lat), # sets upper/lower y
+       axes = TRUE, 
+       col = "grey95",
+       main="Occurrence Map of Adelie, Chinstrap, and Gentoo Penguins",  # title
+       sub="990 Occurrences", # caption
+       xlab = "Longitude",
+       ylab = "Latitude"
+  )
+  
+  penguinData$name <- factor(penguinData$name)
+  
+  # add the points for individual observation
+  points(x = penguinData$longitude, 
+         y = penguinData$latitude, 
+         col = c("#ff8400", "#be43cc", "#04838a"), 
+         pch = 20, 
+         cex = 0.75,
+         lwd = 0.5)
+  
+  legend(x="bottomright", 
+         legend=c("Gentoo", "Chinstrap", "Adelie"), 
+         col=c("#04838a","#be43cc","#ff8400"), 
+         pch=20, merge=FALSE )
+  
+  # draw a little box around the graph
+  box()
+  # stop mapping
+  dev.off()
+  # 
 }

@@ -91,7 +91,7 @@ data(wrld_simpl)
 
 # Draw the base map
 plot(wrld_simpl, xlim = c(xmin, xmax), ylim = c(ymin, ymax), axes = TRUE, col = "gray95",
-     main = paste0(gsub(pattern = "_", replacement = " ", x = outprefix), " - future"))
+     main = paste0("Future Climate Predictions for 2070 with Occurrence Data"), xlab='Longitude', ylab='Latitude')
 
 # Add the model rasters
 plot(sdm.raster, legend = FALSE, add = TRUE)
