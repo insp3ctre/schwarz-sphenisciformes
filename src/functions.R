@@ -53,7 +53,7 @@ occurrenceMap <- function() {
   min.lon <- floor(min(penguinData$longitude))
   
   # save as jpg
-  jpeg(file="output/penguinsZoomed.jpg")
+  jpeg(file="output/occurrenceMap.jpg")
   
   # load spatial polygons
   data(wrld_simpl)
