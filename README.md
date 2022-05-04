@@ -38,7 +38,7 @@
 
 -   `penguinData <- query()`
 
-4.  To create an occurrence map, run `occurenceMap()`
+4.  To create an occurrence map, run `occurrenceMap()`
 5.  To create either an SDM, run:
 -   `source("src/penguins-sdm-single.R")`
 -   `source("src/future-sdm-single.R")`
