@@ -65,7 +65,6 @@ occurrenceMap <- function() {
        axes = TRUE, 
        col = "grey95",
        main="Occurrence Map of Adelie, Chinstrap, and Gentoo Penguins",  # title
-       sub="990 Occurrences", # caption
        xlab = "Longitude",
        ylab = "Latitude"
   )

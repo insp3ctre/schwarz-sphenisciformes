@@ -28,4 +28,4 @@ vignettes/*.pdfs
 .Renviron
 # don't show my token to the world
 github.R
-schwarz-sphenisciformes.html
+

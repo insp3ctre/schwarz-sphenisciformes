@@ -10,11 +10,13 @@ knitr::opts_chunk$set(echo = TRUE)
 install.packages("knitr")
 install.packages("tidyverse")
 install.packages("spocc")
+install.packages("lubridate")
 library(knitr)
 library(tidyverse)
 library(spocc)
+library(lubridate)
 source("src/functions.R")
-penguinsData <- query()
+penguinData <- query()
 ```
 
 ## Background
@@ -46,11 +48,26 @@ WorldClim was the provider of any climate data used in this project. It consists
 The data queried from GBIF was cleaned to ensure that the data was usable. This included making sure that the entries had a count of at least 1 occurrence, the status of the occurrence "Present" as opposed to "Absent", and making sure both longitude and latitude were present. After this process, the following data counts were left:
 
 ```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
-tab <- penguinsData %>% count(name)
+# count by name
+tab <- penguinData %>% group_by(name) %>% summarize(Occurrences = sum(individualCount))
+# rename variable
 tab <- rename(tab, Species = name)
-tab <- rename(tab, Occurence_Entries = n)
+# table
 kable(tab)
 
+```
+
+## Total Occurrences
+```{r graph1, echo=FALSE}
+# make ymd into one variable
+penguinData <- penguinData %>% mutate(date = make_date(year=year, month=month, day=day))
+# cumulative count by date
+penguinData <- penguinData %>% arrange(date) %>% mutate(total = cumsum(individualCount))
+# graph
+penguinData %>% 
+  ggplot(aes(x=date, y=total)) + geom_line() + 
+  labs(title = "Occurrences Over Time", caption = "1,746,665 total occurrences of Adelie, Chinstrap, and Gentoo penguins", x="Date", y="Total Occurrences") +
+  theme(plot.title = element_text(hjust = 0.5), plot.caption = element_text(hjust=0.5))
 ```
 
 ## Species Occurrence Map
@@ -73,3 +90,9 @@ I would like to acknowledge Jeff Oliver, a Data Science Specialist at University
 
 1.  [GBIF](gbif.org)
 2.  [envirobites](https://envirobites.org/2021/02/09/penguins-and-conservation-how-penguins-can-help-us-conserve-an-entire-ecosystem/)
+3.  [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/)
+4.  [ITIS](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=174449#null)
+5.  [Adelie Penguins](https://www.antarctica.gov.au/about-antarctica/animals/penguins/adelie-penguins/)
+6.  [Chinstrap Penguins](https://www.antarctica.gov.au/about-antarctica/animals/penguins/chinstrap-penguins/)
+7.  [Gentoo Penguins](https://www.antarctica.gov.au/about-antarctica/animals/penguins/gentoo-penguins/)
+8.  [WorldClim](https://www.worldclim.org/data/bioclim.html)
