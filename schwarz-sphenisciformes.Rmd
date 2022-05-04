@@ -19,33 +19,52 @@ source("src/functions.R")
 penguinData <- query()
 ```
 
+*All code and maps can be found on [Github](https://github.com/insp3ctre/schwarz-sphenisciformes).*
+
 ## Background
 
-## Why Penguins?
+This project takes heavy inspiration from the `palmerpenguins` package. This data set includes collected data from the Palmer Station in Antarctica where researchers studied three penguin species: Adélie, Chinstrap, and Gentoo.^1^ This project draws data from elsewhere and focuses on occurrence data as opposed to various measurements of penguin bodies. “Sphenisciformes” is the order in the taxonomy of penguins, and for this reason, the project is titled the alliteration: “Schwarz Sphenisciformes” (similar to `palmerpenguins`).^2^
+
+## Why Should We Care About Penguins?
 
 Firstly, ![PENGUINS](https://afar-production.imgix.net/uploads/images/afar_post_headers/images/cTfuWAUJoH/original_penguin-arctic-antarctica-2.jpg)
 
-Secondly, penguins are indicator species in Antarctica. An indicator species is a species that helps scientists understand the health of an ecosystem. By monitoring the health and size of a specific population in a specific area, scientists can better understand how the overall environment is doing. Penguins typically feed on krill, and krill is only found where sea ice is present. If scientists notice that there is a drop in penguin population, they can hypothesize that this is due to a decrease in krill population, which is a primary food source for many Antarctic species. From this one observation from this one species, it is possible to make bigger inferences and devote research efforts to this issue.^2^
+Secondly, penguins are indicator species in Antarctica. An indicator species is a species that helps scientists understand the health of an ecosystem. By monitoring the health and size of a specific population in a specific area, scientists can better understand how the overall environment is doing. In terms of penguins, they typically feed on krill, and krill are only found around sea ice.^3^ If scientists notice that there is a drop in penguin population, they can hypothesize that this is due to a decrease in krill population, which is a primary food source for many Antarctic species. By observing a particular species, it is possible to make larger inferences that can help decide where to devote research efforts.
 
 ## Research Question
 
-How are these penguins doing? Is there a concern for their habitat and ecosystem?
+*What is the status of Adélie, Chinstrap, and Gentoo penguins? What, if any, areas of concern need to be addressed in regards to their habitat?*
+
+Indicator species are one of the most important species to monitor in order to subsequently monitor a larger ecosystem.
 
 ## Species
+
+### Adélie
+
+Adélie penguins are distinguished by a white ring surrounding their eyes. They are determined walkers, and they have the capability of walking many miles at once. If there is enough snow on top of ice, “they prefer to plonk onto their bellies and toboggan.”^4^
+
+### Chinstrap
+
+Chinstrap penguins are known for the narrow black band underneath their heads. They are a particularly abundant species in Antarctic areas.^5^
+
+### Gentoo
+
+Gentoo penguins are the third largest penguin species. They have red/orange colored bills with white eye patches. Compared to other Antarctic penguin species, they are the least abundant.^6^
+
 
 ## Data Sources
 
 ### [GBIF](gbif.org)
 
-The Global Biodiversity Information Facility is a website that contains open access data "about all types of life on Earth."^1^ In particular, you can search for specific species of animals and view thousands of entries of occurence data. Using the **Spocc** package in R, data can be queried directly from GBIF and placed into a variable. If desired, the specifc years and amount of data that is pulled can be included as query parameters. For the sake of simplicity and to save computing power, the default limit of 500 occurence entries was used for each species. No other query parameters were used.
+The Global Biodiversity Information Facility is a website that contains open access data "about all types of life on Earth."^7^ In particular, you can search for specific species of animals and view thousands of entries of occurrence data. This data is crowd sourced, so it is from many different sources and was collected for many different reasons. Each entry typically consists of anywhere between one to one thousand occurrences of a particular penguin species, but it reaches upwards of half a million. Due to these large counts, it can be inferred that some of the data counts are estimated, so this analysis should be considered with some skepticism. Using the *Spocc* package in R, data can be queried directly from GBIF and placed into a data frame. If desired, the specific years and amount of data that is pulled can be included as query parameters. For the sake of simplicity and to save computing power, the default limit of 500 occurrence entries was used for each species. No other query parameters were used.
 
 ### [WorldClim](https://www.worldclim.org/data/bioclim.html)
 
-WorldClim was the provider of any climate data used in this project. It consists of 19 bioclimatic variables that range from max temperatures in a particular month to precipitation levels during a typically dry month. This was used to model both current and future distribution. The amount of data is very large and can cause issues within RStudio Cloud, so proceed with caution.
+WorldClim was the provider of any climate data used in this project. It consists of 19 bioclimatic variables that range from max temperatures in a particular month to precipitation levels during a typically dry month. This was used to model both current and future distribution. The amount of data is very large and can cause issues within RStudio Cloud, so proceed with caution when replicating the following maps.
 
 ## Data Cleaning
 
-The data queried from GBIF was cleaned to ensure that the data was usable. This included making sure that the entries had a count of at least 1 occurrence, the status of the occurrence "Present" as opposed to "Absent", and making sure both longitude and latitude were present. After this process, the following data counts were left:
+The data queried from GBIF was cleaned to ensure that the data was usable. This included making sure that the entries had a count of at least 1 occurrence, the status of the occurrence is "Present" as opposed to "Absent", and making sure both longitude and latitude were present. On top of this, limits for the longitude and latitude were also included in order to ignore a small handful of outliers that would stretch out the generated maps and remove focus from the main cluster. The longitude was limited to between 0 and -100, and the latitude was limited to between -80 and -50. After this process, the following data counts were left:
 
 ```{r table1, echo=FALSE, message=FALSE, warnings=FALSE, results='asis'}
 # count by name
@@ -69,30 +88,49 @@ penguinData %>%
   labs(title = "Occurrences Over Time", caption = "1,746,665 total occurrences of Adelie, Chinstrap, and Gentoo penguins", x="Date", y="Total Occurrences") +
   theme(plot.title = element_text(hjust = 0.5), plot.caption = element_text(hjust=0.5))
 ```
+*Note: This data consists of both accurate and estimated counts, and does not contain all available data (due to computing limitations). *
+
+At the beginning of this particular data set, there was a sharp rise in population. However, it very quickly plateaued for several years. This could be for several reasons, one of which may simply be a lack of observed data during this time. Because the data was only queried in a small amount, there may be a lack of information during this time period that was not queried. Alternatively, there may not have been many researchers during this time, potentially caused by the ongoing pandemic.
 
 ## Species Occurrence Map
 
-![Occurrence Map](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/penguinsZoomed.jpg)
+![](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/occurrenceMap.jpg)
 
-Based on the limited queried data, the three penguin species appear to intermingle with each other. There are no major clusters of a particular species. For the most part, they can be found along the coastline of particular areas, likely due to their need to feed on other aquatic species.
+Based on the limited queried data, the three penguin species appear to intermingle with each other. There are no major clusters of a particular species. For the most part, they can be found along the coastline of particular areas, likely due to their need to feed on other aquatic species. It should be noted that there are probably more occurrences in other parts of the ocean and near land, but those are areas that researchers may not have visited. It should also be noted that this map does not represent all 1,746,665 occurrences, but rather it represents each entry where any amount of penguins were observed.
 
 ## Species Distribution Model
 
+![](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/sdm.jpg)
+
+A species distribution model displays the current habitats that are suitable for a particular species. The species may not currently be in those areas, but they would be suitable should the species choose to move. This model also consists of the current occurrence data. At first glance, it may not be noticeable that there are any suitable habitats, but the bottom tip of South America has a small patch of habitable land for penguins. After this map was generated, it was immediately obvious that there is a major flaw with this project: lack of data.
+
+The species distribution model relies on climate data to determine suitable habitats. If there is not sufficient climate data, then the model will not be complete. The reasoning for the low amount of suitable areas is likely due to the lack of accessible climate data recorded in this portion of Antarctica. WorldClim was chosen due to the ease of integrating with R, but it appears that there is not sufficient WorldClim data available in this region to fully determine all currently suitable habitats for penguins. It can be inferred that the current occurrences of penguins are in decent habitats.
+
+
 ## Species Forecast Model
+
+![](https://raw.githubusercontent.com/insp3ctre/schwarz-sphenisciformes/main/output/sdf.jpg)
+Similar to the species distribution model, the species forecast model displays future suitable habitats for a particular species. The model takes into consideration estimated future climate data and determines where suitable habitats will be, in this case, in the year 2070. Once again, there is a noticeable lack of suitable habitats asides for minor clusters on the bottom tip of South America. Because this model is based on climate data, and due to the lack of climate data in Antarctica, this model is not fully complete. Without adequate data from Antarctica, it is impossible to model every suitable habitat. However, with the currently available data, it is worth noting that the suitable habitat appears to have moved slightly more north as compared to the species distribution model. This implies a change in the environmental factors of southern South America. This could create a strain for penguin populations that currently reside in this area, as they may be required to migrate north in order to live comfortably. 
 
 ## Summary of Findings
 
-### Acknowledgement
+Due to the apparent lack of climate data, it is difficult to properly assess the status of Adélie, Chinstrap, and Gentoo penguins. Without properly being able to predict their current and future suitable habitats, it is not possible to make proper inferences. This is an area of concern, as due to the nature of penguins being an indicator species, it is important that penguins are closely monitored and studied in order to determine the status of the larger ecosystem. While there is climate data available in other formats, it is not available in a way that easily integrates into creating these maps.
+
+## Recommendations for Future Research
+
+A primary focus should be towards collecting new climate data or converting already collected data into formats that are more easily accessible. Once this has been completed, this analysis should be performed again but with a much larger query size. This requires much more computing power than what was available for this project, but with the combined climate data and large amount of occurrence data, a proper analysis may be completed, and this provides a fairly accurate representation of Adélie, Chinstrap, and Gentoo penguins.
+
+## Acknowledgement
 
 I would like to acknowledge Jeff Oliver, a Data Science Specialist at University of Arizona, from whom I have [borrowed code](https://github.com/jcoliver/biodiversity-sdm-lesson).
 
 ## References
 
-1.  [GBIF](gbif.org)
-2.  [envirobites](https://envirobites.org/2021/02/09/penguins-and-conservation-how-penguins-can-help-us-conserve-an-entire-ecosystem/)
-3.  [palmerpenguins](https://allisonhorst.github.io/palmerpenguins/)
-4.  [ITIS](https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=174449#null)
-5.  [Adelie Penguins](https://www.antarctica.gov.au/about-antarctica/animals/penguins/adelie-penguins/)
-6.  [Chinstrap Penguins](https://www.antarctica.gov.au/about-antarctica/animals/penguins/chinstrap-penguins/)
-7.  [Gentoo Penguins](https://www.antarctica.gov.au/about-antarctica/animals/penguins/gentoo-penguins/)
+1.  Horst AM, Hill AP, Gorman KB (2020). palmerpenguins: Palmer Archipelago (Antarctica) penguin data. R package version 0.1.0. [https://allisonhorst.github.io/palmerpenguins/](https://allisonhorst.github.io/palmerpenguins/). doi: 10.5281/zenodo.3960218.
+2.  Retrieved May 5th, 2022, from the Integrated Taxonomic Information System (ITIS) on-line database, https://www.itis.gov/servlet/SingleRpt/SingleRpt?search_topic=TSN&search_value=174449#null/
+3.  Handley, J., Rouyer, M. M., Pearmain, E. J., Warwick-Evans, V., Teschke, K., Hinke, J. T., … & Dias, M. P. (2021). Marine Important Bird and Biodiversity Areas for Penguins in Antarctica, Targets for Conservation Action. Frontiers in Marine Science, 7, 1190. [https://doi.org/10.3389/fmars.2020.602972](https://doi.org/10.3389/fmars.2020.602972)
+4.  “Adélie Penguins.” Australian Antarctic Program, 20 Mar. 2018, [https://www.antarctica.gov.au/about-antarctica/animals/penguins/adelie-penguins/](https://www.antarctica.gov.au/about-antarctica/animals/penguins/adelie-penguins/). 
+5.  “Chinstrap Penguins.” Australian Antarctic Program, 20 Mar. 2018, [https://www.antarctica.gov.au/about-antarctica/animals/penguins/chinstrap-penguins/](https://www.antarctica.gov.au/about-antarctica/animals/penguins/chinstrap-penguins/). 
+6.  “Gentoo Penguins.” Australian Antarctic Program, 20 Mar. 2018, [https://www.antarctica.gov.au/about-antarctica/animals/penguins/gentoo-penguins/](https://www.antarctica.gov.au/about-antarctica/animals/penguins/gentoo-penguins/). 
+7.  [GBIF](gbif.org)
 8.  [WorldClim](https://www.worldclim.org/data/bioclim.html)
