@@ -1,3 +1,11 @@
+# INSTRUCTIONS #
+# 1. Run the initial setup files
+# 2. Query the data
+# 3. Produce graphs:
+#   a. create an occurrence map
+#   b. create a species distribution map
+#   c. create a species forecast model
+
 # initial setup
 source("src/setup.R")
 source("src/functions.R")
